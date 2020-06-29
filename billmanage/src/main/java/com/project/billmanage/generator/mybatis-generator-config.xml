@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="sqlserver" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!--是否去除自动生成的注释  true：是，false：否-->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                        connectionURL="jdbc:sqlserver://127.0.0.1:1433;databaseName=billManage"
+                        userId="sa"
+                        password="WChinaZC1998926">
+        </jdbcConnection>
+        <!--java解析器，把JDBC DECIMAL和NUMERIC类型解析为Integer，默认为false-->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!--生成pojo类的位置-->
+        <javaModelGenerator targetPackage="com.project.billmanage.entities.pojo" targetProject="src/main/java">
+            <!--是否让schema作为包的后缀，默认设置为false-->
+            <property name="enableSubPackages" value="false" />
+            <!--从数据库返回的值被清理前后的空格-->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--mapper映射文件生成位置-->
+        <sqlMapGenerator targetPackage="mybatis.mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!--mapper接口生成位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.project.billmanage.dao.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+
+
+        <table tableName="rrole" ></table>
+
+
+
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+    <!--开启驼峰命名-->
+    <setting name = "mapUnderscoreToCamelCase" value="true"></setting>
+    </settings>
+    <!--开启当前包下面的全部别名，必须开启此设置后才能使用@Alias才能够注解其他别名生效-->
+    <typeAliases>
+        <package name="com.group.project.entities.POJO"/>
+    </typeAliases>
+</configuration>

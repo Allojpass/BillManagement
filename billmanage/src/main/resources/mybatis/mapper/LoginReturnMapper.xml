@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.billmanage.dao.mapper.LoginReturnMapper" >
+    <resultMap id="LoginReturnMap" type="com.project.billmanage.entities.others.LoginReturn">
+        <result column="clientName" property="clientName"></result>
+        <result column="clientId" property="clientId"></result>
+        <result column="roleName" property="roleName"></result>
+    </resultMap>
+    <select id="selectLoginReturnMessage" resultMap="LoginReturnMap">
+        select client.clientId,clientName,roleName from client,clientRole,rrole where client.clientName=#{clientname} and client.clientId = clientRole.clientId and clientRole.rroleId = rrole.rroleId
+    </select>
+</mapper>

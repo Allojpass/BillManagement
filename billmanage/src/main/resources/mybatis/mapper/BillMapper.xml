@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.billmanage.dao.mapper.BillMapper" >
+  <resultMap id="BaseResultMap" type="com.project.billmanage.entities.pojo.Bill" >
+    <id column="billId" property="billid" jdbcType="INTEGER" />
+    <result column="billCode" property="billcode" jdbcType="VARCHAR" />
+    <result column="commoditiesName" property="commoditiesname" jdbcType="VARCHAR" />
+    <result column="supplierName" property="suppliername" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="pay" property="pay" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.billmanage.entities.pojo.Bill" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    billId, billCode, commoditiesName, supplierName, price, pay, createTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.project.billmanage.entities.pojo.BillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.project.billmanage.entities.pojo.BillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bill
+    where billId = #{billid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bill
+    where billId = #{billid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.project.billmanage.entities.pojo.BillExample" >
+    delete from bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.project.billmanage.entities.pojo.Bill" >
+    insert into bill (billId, billCode, commoditiesName, 
+      supplierName, price, pay, 
+      createTime, description)
+    values (#{billid,jdbcType=INTEGER}, #{billcode,jdbcType=VARCHAR}, #{commoditiesname,jdbcType=VARCHAR}, 
+      #{suppliername,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{pay,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=DATE}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.billmanage.entities.pojo.Bill" >
+    insert into bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billid != null" >
+        billId,
+      </if>
+      <if test="billcode != null" >
+        billCode,
+      </if>
+      <if test="commoditiesname != null" >
+        commoditiesName,
+      </if>
+      <if test="suppliername != null" >
+        supplierName,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="pay != null" >
+        pay,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billid != null" >
+        #{billid,jdbcType=INTEGER},
+      </if>
+      <if test="billcode != null" >
+        #{billcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditiesname != null" >
+        #{commoditiesname,jdbcType=VARCHAR},
+      </if>
+      <if test="suppliername != null" >
+        #{suppliername,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="pay != null" >
+        #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.project.billmanage.entities.pojo.BillExample" resultType="java.lang.Integer" >
+    select count(*) from bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bill
+    <set >
+      <if test="record.billid != null" >
+        billId = #{record.billid,jdbcType=INTEGER},
+      </if>
+      <if test="record.billcode != null" >
+        billCode = #{record.billcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commoditiesname != null" >
+        commoditiesName = #{record.commoditiesname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suppliername != null" >
+        supplierName = #{record.suppliername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.pay != null" >
+        pay = #{record.pay,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update bill
+    set billId = #{record.billid,jdbcType=INTEGER},
+      billCode = #{record.billcode,jdbcType=VARCHAR},
+      commoditiesName = #{record.commoditiesname,jdbcType=VARCHAR},
+      supplierName = #{record.suppliername,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      pay = #{record.pay,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=DATE},
+      description = #{record.description,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bill
+    set billId = #{record.billid,jdbcType=INTEGER},
+      billCode = #{record.billcode,jdbcType=VARCHAR},
+      commoditiesName = #{record.commoditiesname,jdbcType=VARCHAR},
+      supplierName = #{record.suppliername,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      pay = #{record.pay,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.billmanage.entities.pojo.Bill" >
+    update bill
+    <set >
+      <if test="billcode != null" >
+        billCode = #{billcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditiesname != null" >
+        commoditiesName = #{commoditiesname,jdbcType=VARCHAR},
+      </if>
+      <if test="suppliername != null" >
+        supplierName = #{suppliername,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="pay != null" >
+        pay = #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where billId = #{billid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.billmanage.entities.pojo.Bill" >
+    update bill
+    set billCode = #{billcode,jdbcType=VARCHAR},
+      commoditiesName = #{commoditiesname,jdbcType=VARCHAR},
+      supplierName = #{suppliername,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      pay = #{pay,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=DATE},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where billId = #{billid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.billmanage.entities.pojo.Bill" >
+    update bill
+    set billCode = #{billcode,jdbcType=VARCHAR},
+      commoditiesName = #{commoditiesname,jdbcType=VARCHAR},
+      supplierName = #{suppliername,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      pay = #{pay,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=DATE}
+    where billId = #{billid,jdbcType=INTEGER}
+  </update>
+</mapper>
